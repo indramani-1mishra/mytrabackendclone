@@ -82,8 +82,8 @@ const updateproducts = async (id, data) => {
         resource_type: "image",
         quality: "auto",
       });
-
       updatedimageurl = updatecloudnery.secure_url;
+      await fs.unlink(data.image);
     }
 
     

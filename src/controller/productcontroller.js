@@ -1,4 +1,4 @@
-const { createproductse, updateproducts, findproduct, removeproducts } = require("../service/productservice");
+const { createproductse, updateproducts, findproduct, removeproducts, findproductbyid } = require("../service/productservice");
 
 const productcontrollerc = async (req, res) => {
     try {
@@ -135,8 +135,9 @@ const removeproductscontroller = async (req, res) => {
 };
 
 const getproductsbuidcontroller = async (req, res) => {
+    
     try {
-        const response = await findproduct(req.params.id);
+        const response = await findproductbyid(req.params.id);
         
         if (!response) {
             return res.status(404).json({

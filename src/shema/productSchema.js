@@ -30,8 +30,8 @@ const productSchema = new mongoose.Schema(
     quantity: {
       type: Number,
       required: true,
-      default: 1, // Default quantity is 1
-      min: [1, "Quantity should be at least 1"], // Minimum 1 product required
+      default: 10, // Default quantity is 1
+      min: [0, "Quantity should be at least 1"], // Minimum 1 product required
     },
     image: {
       type: String,

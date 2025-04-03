@@ -58,10 +58,26 @@ const getproducts = async () => {
     }
 };
 
+
+const findproductbycategory =async(categories)=>
+{
+  try
+  {
+   const response = await ProductModel.find({category:categories});
+   return response
+  }
+  catch{
+      throw({message:"error in findproductbycategory"});
+  }
+}
+
+
+
 module.exports = {
     createproduct,
     getproducts,
     updateproduct,
     deleteproductsbyid,
-    getproductsbyid
+    getproductsbyid,
+    findproductbycategory
 };

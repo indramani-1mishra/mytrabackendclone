@@ -1,4 +1,4 @@
-const { createproductse, updateproducts, findproduct, removeproducts, findproductbyid } = require("../service/productservice");
+const { createproductse, updateproducts, findproduct, removeproducts, findproductbyid, searchbycategory } = require("../service/productservice");
 
 const productcontrollerc = async (req, res) => {
     try {
@@ -162,10 +162,30 @@ const getproductsbuidcontroller = async (req, res) => {
     }
 };
 
+const getProductsByCategoryc = async (req, res) => {
+    try {
+        const category = req.params.category;  // URL से category लेना
+        if (!category) {
+            return res.status(400).json({ success: false, message: "Category is required" });
+        }
+
+        const response = await searchbycategory(category);
+        if (!response || response.length === 0) {
+            return res.status(404).json({ success: false, message: "No products found in this category" });
+        }
+
+        res.status(200).json({ success: true, data: response ,message:"data fetched successfully"});
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+
 module.exports = {
     productcontrollerc,
     productUpdatecontroller,
     getproductsbuidcontroller,
     removeproductscontroller,
     getAllProductsController,
+    getProductsByCategoryc,
 };

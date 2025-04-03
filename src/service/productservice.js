@@ -1,6 +1,6 @@
 const { renameSync } = require("fs");
 const { cloudinary } = require("../config/cloudneryconfig");
-const { createproduct, getproducts, getproductsbyid, deleteproductsbyid, updateproduct } = require("../repository/productrepository");
+const { createproduct, getproducts, getproductsbyid, deleteproductsbyid, updateproduct, findproductbycategory } = require("../repository/productrepository");
 const fs = require("fs").promises; // Use fs.promises for async file deletion
 
 
@@ -99,10 +99,22 @@ const updateproducts = async (id, data) => {
   }
 };
 
+
+const searchbycategory = async (categories) => {
+  try {
+    return await  findproductbycategory(categories);
+  } catch (error) {
+    console.error("Error:", error.message);
+    throw new Error("Error in deleting product in service layer");
+  }
+};
+
+
 module.exports = {
   createproductse,
   findproduct,
   findproductbyid,
   removeproducts,
   updateproducts,
+  searchbycategory
 };

@@ -70,6 +70,18 @@ const findproductbycategory =async(categories)=>
       throw({message:"error in findproductbycategory"});
   }
 }
+const findproductbydescription =async(descriptions)=>
+    {
+      try
+      {
+       const response = await ProductModel.find({description:descriptions});
+       return response
+      }
+      catch{
+          throw({message:"error in findproductbydescription"});
+      }
+    }
+    
 
 
 
@@ -79,5 +91,6 @@ module.exports = {
     updateproduct,
     deleteproductsbyid,
     getproductsbyid,
-    findproductbycategory
+    findproductbycategory,
+    findproductbydescription
 };

@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ["all", "men", "women", "kids", "toys", "jewelry", "electronics"],
+      enum: ["all", "men", "women", "kids", "toys", "jewelry", "electronics","shoes",'Eyewear',"perfume","bags"],
       default: "all",
     },
     instock: {

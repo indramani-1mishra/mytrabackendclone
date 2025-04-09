@@ -23,7 +23,24 @@ const findUserByEmailOrPhone = async ({ email, phonenumber }) => {
     }
 };
 
+const findUserByEmailOrPhoneExceptPassword = async ({ email, phonenumber }) => {
+    try {
+      const query = {};
+      if (email) query.email = email;
+      if (phonenumber) query.phonenumber = phonenumber;
+  
+      // User ko dhoondho lekin password field ko skip karo
+      return await User.findOne(query).select('-password');
+    } catch (error) {
+      console.error("Error in findUserByEmailOrPhone:", error.message);
+      throw new Error("Error while finding user in repository layer.");
+    }
+  };
+  
+
 module.exports = {
     createuser,
-    findUserByEmailOrPhone
+    findUserByEmailOrPhone,
+ findUserByEmailOrPhoneExceptPassword ,
+
 };

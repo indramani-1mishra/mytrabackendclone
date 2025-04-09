@@ -1,5 +1,5 @@
 const { createCart } = require("../repository/cartrepository");
-const { createuser, findUserByEmailOrPhone } = require("../repository/userrepository");
+const { createuser, findUserByEmailOrPhone, findUserByEmailOrPhoneExceptPassword } = require("../repository/userrepository");
 
 const createUsers = async (userDetails) => {  // Renamed 'productDetails' to 'userDetails' for clarity
     try {
@@ -27,6 +27,16 @@ const createUsers = async (userDetails) => {  // Renamed 'productDetails' to 'us
     }
 };
 
+const finduserbyemailorphonenumber = async (email, phonenumber) => {
+    try {
+      const data = await findUserByEmailOrPhoneExceptPassword({ email, phonenumber });
+      return data;
+    } catch (error) {
+      throw { message: "User not found in service layer" };
+    }
+  };
+  
 module.exports = {
-    createUsers
+    createUsers,
+    finduserbyemailorphonenumber,
 };

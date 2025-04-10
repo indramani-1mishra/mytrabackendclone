@@ -8,8 +8,9 @@ const logincontroller = async (req, res) => {
         // Set Cookie with Token
         res.cookie("authtoken", response.token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Only secure in production
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 Days
+            secure: false, // Only secure in production
+            maxAge: 7 * 24 * 60 * 60 * 1000 ,// 7 Days
+            sameSite: 'None'
         });
 
         return res.status(201).json({

@@ -70,6 +70,7 @@ const removetocartc = async (req, res) => {
 
 
 
+
 module.exports = {
     getcartc,
     addtocartc,

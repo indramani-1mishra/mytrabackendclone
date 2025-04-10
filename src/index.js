@@ -10,10 +10,9 @@ const app = express();
 
 // ✅ CORS Middleware (Frontend se requests allow karne ke liye)
 app.use(cors({
-  origin: "http://localhost:5173",  // ✅ Apne frontend ka URL yahan likho
-  credentials: true,  // ✅ Cookies allow karne ke liye
+  origin: "https://your-frontend-app.onrender.com", // 👈 yeh aapka React app ka live Render URL hona chahiye
+  credentials: true
 }));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

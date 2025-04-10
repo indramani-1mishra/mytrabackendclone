@@ -9,8 +9,19 @@ const { isLoggedIn } = require('./validetor/islogin');
 const app = express();
 
 // ✅ CORS Middleware (Frontend se requests allow karne ke liye)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-frontend-app.onrender.com"
+];
+
 app.use(cors({
-  origin: "https://your-frontend-app.onrender.com", // 👈 yeh aapka React app ka live Render URL hona chahiye
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());

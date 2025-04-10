@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors');  // 🛑 CORS middleware import karo
+const cors = require('cors');
 const { PORT } = require('./config/serverconfig');
 const connectdatabase = require('./config/databaseconfig');
 const apirouter = require('./routes/apirouter');
@@ -8,7 +8,7 @@ const { isLoggedIn } = require('./validetor/islogin');
 
 const app = express();
 
-// ✅ CORS Middleware (Frontend se requests allow karne ke liye)
+// 🟢 CORS setup
 const allowedOrigins = [
   "http://localhost:5173",
   "https://your-frontend-app.onrender.com"
@@ -19,16 +19,18 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn("🚫 Blocked CORS origin:", origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
 
+// 🛣 Routes
 app.use('/api', apirouter);
 
 app.get('/', isLoggedIn, (req, res) => {
@@ -36,6 +38,6 @@ app.get('/', isLoggedIn, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}!`);
+  console.log(`✅ Server listening on port ${PORT}`);
   connectdatabase();
 });

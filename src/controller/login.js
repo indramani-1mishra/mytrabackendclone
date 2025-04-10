@@ -8,9 +8,9 @@ const logincontroller = async (req, res) => {
         // Set Cookie with Token
         res.cookie("authtoken", response.token, {
             httpOnly: true,
-            secure: false,        // ✅ because it's localhost
+            secure: true,        // ✅ because it's localhost
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            sameSite: 'Lax'       // ✅ change this from 'None' to 'Lax'
+            sameSite: "None",     // ✅ change this from 'None' to 'Lax'
           });
           
         return res.status(201).json({

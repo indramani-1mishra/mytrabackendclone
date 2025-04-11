@@ -11,7 +11,7 @@ const app = express();
 // 🟢 CORS setup
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-frontend-app.onrender.com"
+  "https://fullstactprojectmytraclone-1.onrender.com"
 ];
 
 app.use(cors({

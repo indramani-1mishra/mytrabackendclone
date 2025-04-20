@@ -64,55 +64,57 @@ const addToCart = async (userId, productId) => {
 };
 
 const removecart = async (userId, productId) => {
-    try {
-      // 🛒 1. Cart & Product fetch karo
-      const cart = await findCart(userId);
-      const product = await getproductsbyid(productId);
-  
-      if (!cart) {
-        throw { message: "Cart not found!" };
-      }
-  
-      if (!product) {
-        throw { message: "Product not found!" };
-      }
-  
-      // 🔍 2. Cart me product dhoondo aur quantity handle karo
-      let itemFound = false;
-  
-      for (let i = 0; i < cart.items.length; i++) {
-        const item = cart.items[i];
-  
-        if (item.product.toString() === productId.toString()) {
-          item.quantity -= 1;
-  
-          if (item.quantity <= 0) {
-            cart.items.splice(i, 1); // 🧹 Agar quantity 0 ho gayi to hata do
-          }
-  
-          itemFound = true;
-          break; // ✅ Ek hi baar milta hai product, loop band karo
-        }
-      }
-  
-      // ❗ 3. Agar item cart me mila hi nahi
-      if (!itemFound) {
-        throw { message: "Product not found in cart!" };
-      }
-  
-      // 🧾 4. Product ki stock wapas badhao
-      product.quantity += 1;
-  
-      // 💾 5. Save cart and product
-      await cart.save();
-      await product.save();
-  
-      // 📦 6. Latest cart return karo (agar chaho to populate bhi kar sakte ho)
-      return await cart.populate("items.product");
-    } catch (error) {
-      throw error;
+  try {
+    // 🛒 1. Cart & Product fetch karo
+    const cart = await findCart(userId);
+    const product = await getproductsbyid(productId);
+
+    if (!cart) {
+      throw { message: "Cart not found!" };
     }
-  };
+
+    if (!product) {
+      throw { message: "Product not found!" };
+    }
+
+    // 🔍 2. Cart me product dhoondo aur quantity handle karo
+    let itemFound = false;
+
+    for (let i = 0; i < cart.items.length; i++) {
+      const item = cart.items[i];
+
+      // ✅ ObjectId comparison using .equals() 
+      if (item.product.equals(productId)) { 
+        item.quantity -= 1;
+
+        if (item.quantity <= 0) {
+          cart.items.splice(i, 1); // 🧹 Agar quantity 0 ho gayi to hata do
+        }
+
+        itemFound = true;
+        break; // ✅ Ek hi baar milta hai product, loop band karo
+      }
+    }
+
+    // ❗ 3. Agar item cart me mila hi nahi
+    if (!itemFound) {
+      throw { message: "Product not found in cart!" };
+    }
+
+    // 🧾 4. Product ki stock wapas badhao
+    product.quantity += 1;
+
+    // 💾 5. Save cart and product
+    await cart.save();
+    await product.save();
+
+    // 📦 6. Latest cart return karo (agar chaho to populate bhi kar sakte ho)
+    return await cart.populate("items.product");
+  } catch (error) {
+    throw error;
+  }
+};
+
   
 
 
